@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Share Workouts</h2>
+
+<form method="POST">
+    <div class="mb-3">
+        <label for="username">Share with (username):</label>
+        <input type="text" name="username" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="workout_id">Workout:</label>
+        <select name="workout_id" class="form-control">
+            {% for workout in workouts %}
+                <option value="{{ workout.id }}">
+                    {{ workout.date }} - {{ workout.activity }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Share</button>
+</form>
+{% endblock %}

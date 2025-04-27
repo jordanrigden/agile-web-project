@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Workouts Shared With Me</h2>
+
+{% if workouts %}
+<ul class="list-group">
+    {% for workout in workouts %}
+    <li class="list-group-item">
+        <strong>Date:</strong> {{ workout.date }} |
+        <strong>Activity:</strong> {{ workout.activity }} |
+        <strong>Duration:</strong> {{ workout.duration }} mins |
+        <strong>Distance:</strong> {{ workout.distance }} km |
+        <strong>Calories:</strong> {{ workout.calories }} kcal
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No workouts have been shared with you yet.</p>
+{% endif %}
+{% endblock %}
