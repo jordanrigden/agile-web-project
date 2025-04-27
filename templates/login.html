@@ -1,0 +1,8 @@
+{% extends 'base.html' %} {% block content %}
+Login
+
+{{ form.hidden_tag() }}
+{{ form.username.label }} {{ form.username(class="form-control") }}
+{{ form.password.label }} {{ form.password(class="form-control") }}
+{{ form.submit(class="btn btn-success") }}
+{% endblock %}
