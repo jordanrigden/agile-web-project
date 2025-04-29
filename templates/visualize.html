@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="my-4 p-3 bg-light border rounded">
+  <h5>Weekly Summary 📈</h5>
+  <ul>
+    <li><strong>Workouts in total:</strong> {{ weekly_count }}</li>
+    <li><strong>Average duration:</strong> {{ avg_duration }} minutes</li>
+    <li><strong>Average calories burned:</strong> {{ avg_calories }} kcal</li>
+  </ul>
+</div>
+
+<h2>Workout Summary</h2>
+
+{% if workouts %}
+<canvas id="chartCanvas" width="400" height="200"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const labels = {{ labels | tojson }};
+  const durations = {{ durations | tojson }};
+  const calories = {{ calories | tojson }};
+
+  const ctx = document.getElementById('chartCanvas').getContext('2d');
+  const myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: 'Duration (min)',
+          data: durations,
+          borderColor: 'blue',
+          fill: false
+        },
+        {
+          label: 'Calories Burned (kcal)',
+          data: calories,
+          borderColor: 'orange',
+          fill: false
+        }
+      ]
+    }
+  });
+</script>
+{% else %}
+<p>No workouts found. <a href="{{ url_for('upload') }}">Upload one now</a>.</p>
+{% endif %}
+{% endblock %}
