@@ -1,19 +1,146 @@
+/* ======= FitTrack Sport Theme Style ======= */
+
 body {
+    font-family: 'Poppins', sans-serif;
     background-color: #f8f9fa;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
 }
 
-h2 {
-    margin-top: 20px;
+.navbar {
+    background-color: #007bff;
+}
+
+.navbar-brand, .nav-link {
+    color: white !important;
+    font-weight: bold;
+}
+
+.nav-link:hover {
+    color: #ffc107 !important;
+}
+
+.container {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 20px;
     margin-bottom: 20px;
 }
 
-form {
-    max-width: 500px;
-    margin: auto;
+h1, h2, h3, h4, h5 {
+    font-weight: 700;
+    color: #007bff;
+}
+
+.btn-primary {
+    background-color: #28a745;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 20px;
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background-color: #218838;
+}
+
+.btn-secondary {
+    background-color: #ffc107;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 20px;
+    font-weight: bold;
+}
+
+.btn-secondary:hover {
+    background-color: #e0a800;
+}
+
+.form-control {
+    border-radius: 10px;
+    border: 1px solid #ced4da;
+    padding: 10px;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
 }
 
 .alert {
-    max-width: 600px;
-    margin: 10px auto;
+    border-radius: 10px;
+}
+
+.footer {
+    margin-top: 50px;
+    padding: 20px;
+    background-color: #007bff;
+    text-align: center;
+    color: white;
+    font-size: 14px;
+}
+
+/* Chart Container */
+.chart-container {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+}
+
+/* Upload Page & Share Page */
+.upload-section, .share-section {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+/* Links */
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* Tables */
+.table {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.table thead {
+    background-color: #007bff;
+    color: white;
+}
+
+.table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Responsive Tweaks */
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 20px;
+    }
+
+    .nav-link {
+        font-size: 16px;
+    }
+
+    .card {
+        padding: 15px;
+    }
 }
