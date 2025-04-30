@@ -1,10 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-4">
-  <div class="alert alert-success" role="alert">
-    ✅ Your Flask app is running successfully!
-  </div>
-  <p>This is a test page after Phase 1. We can now start adding features step by step.</p>
+<div class="container mt-5 text-center">
+  <h1 class="fittrack-title">FitTrack</h1>
 </div>
+
+<style>
+  .fittrack-title {
+    font-size: 4rem;
+    font-weight: 800;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #007bff, #00c9a7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+    letter-spacing: 3px;
+    margin-top: 100px;
+  }
+</style>
 {% endblock %}
