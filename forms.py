@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, FloatField, DateField
-from wtforms.validators import DataRequired, Email, EqualTo, Length
+from wtforms import StringField, PasswordField, SubmitField, FloatField, DateField, SelectField
+from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError
+from models import Workout
 
 class RegisterForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=4, max=25)])
@@ -16,8 +17,11 @@ class LoginForm(FlaskForm):
 
 class WorkoutForm(FlaskForm):
     date = DateField('Date', validators=[DataRequired()])
-    activity = StringField('Activity', validators=[DataRequired()])
+    activity = SelectField(
+        'Type of Activity',
+        choices=[(activity, activity) for activity in Workout.MET_VALUES.keys()],
+        validators=[DataRequired()]
+    )
     duration = FloatField('Duration (min)', validators=[DataRequired()])
     distance = FloatField('Distance (km)', validators=[DataRequired()])
-    calories = FloatField('Calories Burned', validators=[DataRequired()])
     submit = SubmitField('Upload')

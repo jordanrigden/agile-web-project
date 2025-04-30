@@ -42,6 +42,7 @@
   });
 </script>
 {% else %}
-<p>No workouts found. <a href="{{ url_for('upload') }}">Upload one now</a>.</p>
+<p>No workouts found.</p>
+<a class="btn btn-success" href="{{ url_for('upload') }}">Upload one now</a>
 {% endif %}
 {% endblock %}

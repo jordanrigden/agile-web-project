@@ -42,4 +42,16 @@ python
 
 # 4. Start the Flask app
 python app.py
+```
 
+---
+
+## How to Upgrade the Database
+```bash
+# You can bring your database up to date by running
+flask db upgrade
+
+# To automatically create a database migration script
+flask db migrate -m "Description of your migration"
+
+```
