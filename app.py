@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, flash, request
 from config import Config
 from models import db, User, Workout  
-from forms import RegisterForm, LoginForm, WorkoutForm
+from forms import RegisterForm, LoginForm, WorkoutForm, WeightUpdateForm
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
@@ -40,7 +40,12 @@ def register():
             return redirect(url_for('register'))
 
         hashed_pw = generate_password_hash(form.password.data)
-        user = User(username=form.username.data, email=form.email.data, password=hashed_pw)
+        user = User(
+            username=form.username.data,
+            email=form.email.data,
+            password=hashed_pw,
+            weight=form.weight.data 
+        )
         db.session.add(user)
         db.session.commit()
         flash('Registration successful! Please log in.', 'success')
@@ -59,6 +64,13 @@ def login():
         else:
             flash('Invalid username or password.', 'danger')
     return render_template('login.html', form=form)
+
+@app.route('/profile', methods=['GET', 'POST'])
+@login_required
+def profile():
+    form = WeightUpdateForm()
+    workouts = Workout.query.filter_by(user_id=current_user.id).all()
+    return render_template('profile.html', workouts=workouts, form=form)
 
 @app.route('/logout')
 @login_required
@@ -82,9 +94,9 @@ def upload():
 
         workout = Workout(
             date=form.date.data,
+            description=form.description.data,
             activity=form.activity.data,
             duration=duration,
-            distance=form.distance.data,
             calories=calories,
             user_id=current_user.id
         )
@@ -112,6 +124,18 @@ def visualize():
         labels=labels, durations=durations, calories=calories,
         workouts=workouts, weekly_count=weekly_count,
         avg_duration=avg_duration, avg_calories=avg_calories)
+
+@app.route('/update_weight', methods=['POST'])
+@login_required
+def update_weight():
+    form = WeightUpdateForm()
+    if form.validate_on_submit():
+        current_user.weight = form.weight.data
+        db.session.commit()
+        flash('Weight updated successfully!', 'success')
+    else:
+        flash('Failed to update weight. Please try again.', 'danger')
+    return redirect(url_for('profile', form=form))
 
 if __name__ == '__main__':
     with app.app_context():

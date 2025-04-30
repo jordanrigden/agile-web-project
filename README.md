@@ -7,7 +7,7 @@
 ## ✨ Features
 
 - 🧍 User authentication: Register, log in, and log out
-- 📤 Upload workout data (activity, duration, distance, calories)
+- 📤 Upload workout data (activity, duration, calories)
 - 📊 Visualize workout trends using Chart.js
 - 🤝 Share selected workouts with other users
 - 💡 Simple and intuitive UI built with Bootstrap

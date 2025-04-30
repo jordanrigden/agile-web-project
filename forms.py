@@ -6,6 +6,7 @@ from models import Workout
 class RegisterForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=4, max=25)])
     email = StringField('Email', validators=[DataRequired(), Email()])
+    weight = FloatField('Weight (kg)', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')
@@ -17,11 +18,15 @@ class LoginForm(FlaskForm):
 
 class WorkoutForm(FlaskForm):
     date = DateField('Date', validators=[DataRequired()])
+    description = StringField('Description', validators=[DataRequired(), Length(max=200)])
     activity = SelectField(
         'Type of Activity',
         choices=[(activity, activity) for activity in Workout.MET_VALUES.keys()],
         validators=[DataRequired()]
     )
     duration = FloatField('Duration (min)', validators=[DataRequired()])
-    distance = FloatField('Distance (km)', validators=[DataRequired()])
     submit = SubmitField('Upload')
+
+class WeightUpdateForm(FlaskForm):
+    weight = FloatField('Weight (kg)', validators=[DataRequired()])
+    submit = SubmitField('Update Weight')

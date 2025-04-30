@@ -9,7 +9,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(128), nullable=False)
-    weight = db.Column(db.Float, nullable=False)  # User's weight in kilograms
+    weight = db.Column(db.Float, nullable=False)
 
     workouts = db.relationship('Workout', backref='user', lazy=True)
     shares = db.relationship('Share', backref='owner', lazy=True)
@@ -17,9 +17,9 @@ class User(UserMixin, db.Model):
 class Workout(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.Date, nullable=False, default=date.today)
+    description = db.Column(db.String(200), nullable=False)
     activity = db.Column(db.String(64))
     duration = db.Column(db.Float)  # minutes
-    distance = db.Column(db.Float)  # km
     calories = db.Column(db.Float)  # kcal
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
