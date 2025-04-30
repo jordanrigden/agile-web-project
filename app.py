@@ -5,10 +5,12 @@ from forms import RegisterForm, LoginForm, WorkoutForm
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
+from flask_migrate import Migrate
 
 app = Flask(__name__)
 app.config.from_object(Config)
 db.init_app(app)
+migrate = Migrate(app, db)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -70,12 +72,20 @@ def logout():
 def upload():
     form = WorkoutForm()
     if form.validate_on_submit():
+
+        # Get MET value for the activity
+        met = Workout.MET_VALUES.get(form.activity.data, 1.0)  # Default to 1.0 if activity not found
+
+        # Calculate calories
+        duration = form.duration.data
+        calories = Workout.calculate_calories(met, current_user.weight, duration)
+
         workout = Workout(
             date=form.date.data,
             activity=form.activity.data,
-            duration=form.duration.data,
+            duration=duration,
             distance=form.distance.data,
-            calories=form.calories.data,
+            calories=calories,
             user_id=current_user.id
         )
         db.session.add(workout)
