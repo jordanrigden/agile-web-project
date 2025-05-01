@@ -8,9 +8,8 @@
     {% for workout in workouts %}
     <li class="list-group-item">
         <strong>Date:</strong> {{ workout.date }} |
-        <strong>Activity:</strong> {{ workout.activity }} |
+        <strong>Activity:</strong> {{ workout.description }} |
         <strong>Duration:</strong> {{ workout.duration }} mins |
-        <strong>Distance:</strong> {{ workout.distance }} km |
         <strong>Calories:</strong> {{ workout.calories }} kcal
     </li>
     {% endfor %}

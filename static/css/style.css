@@ -12,7 +12,8 @@ body {
     background-color: #007bff;
 }
 
-.navbar-brand, .nav-link {
+.navbar-brand,
+.nav-link {
     color: white !important;
     font-weight: bold;
 }
@@ -29,12 +30,16 @@ body {
 .card {
     background: white;
     border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
     margin-bottom: 20px;
 }
 
-h1, h2, h3, h4, h5 {
+h1,
+h2,
+h3,
+h4,
+h5 {
     font-weight: 700;
     color: #007bff;
 }
@@ -71,7 +76,7 @@ h1, h2, h3, h4, h5 {
 
 .form-control:focus {
     border-color: #007bff;
-    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
 }
 
 .alert {
@@ -91,16 +96,17 @@ h1, h2, h3, h4, h5 {
 .chart-container {
     background: white;
     border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
 }
 
 /* Upload Page & Share Page */
-.upload-section, .share-section {
+.upload-section,
+.share-section {
     background: #ffffff;
     padding: 20px;
     border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
 /* Links */

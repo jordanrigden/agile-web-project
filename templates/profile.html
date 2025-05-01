@@ -1,22 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container mt-4">
-    <h2>User Profile</h2>
+    <h2>{{ current_user.username }}'s Profile</h2>
     <div class="card mb-3">
         <div class="card-body">
-            <h5 class="card-title">Username: {{ current_user.username }}</h5>
-            <p class="card-text">Email: {{ current_user.email }}</p>
+            <h5 class="card-title">Email: {{ current_user.email }}</h5>
             <p class="card-text">
-                Weight: 
-                <span id="weight-label">{{ current_user.weight }} kg</span>
-                <form id="edit-weight-form" method="POST" action="{{ url_for('update_weight') }}" style="display: none;">
+                    <span>Weight:</span>
+                    <span id="weight-label" class="d-inline">{{ current_user.weight }} kg</span>
+                <form id="edit-weight-form" method="POST" action="{{ url_for('update_weight') }}">
                     {{ form.hidden_tag() }}
-                    <div class="input-group">
-                        <input type="number" name="weight" id="weight-input" class="form-control" value="{{ current_user.weight }}" placeholder="Enter new weight" required>
-                        <button type="submit" class="btn btn-success">Save</button>
-                    </div>
+                    <input type="number" name="weight" id="weight-input" class="form-control d-inline w-auto" value="{{ current_user.weight }}" placeholder="Enter new weight" required>
+                    <button type="submit" class="btn btn-success btn-sm">Save</button>
                 </form>
-                <button class="btn btn-sm btn-success" id="edit-weight-btn" onclick="toggleWeightEdit(event)">Edit</button>
             </p>
         </div>
     </div>
@@ -41,33 +37,4 @@
         <p>No workouts found.</p>
     {% endif %}
 </div>
-
-<script>
-    function toggleWeightEdit(event) {
-        event.preventDefault(); // Prevent the button from submitting the form if it's inside a form
-        const form = document.getElementById('edit-weight-form');
-        const label = document.getElementById('weight-label');
-        const button = document.getElementById('edit-weight-btn');
-
-        if (form.style.display === 'none') {
-            // Show the form and hide the label
-            form.style.display = 'block';
-            label.style.display = 'none';
-
-            // Change button to "Cancel" and make it red
-            button.textContent = 'Cancel';
-            button.classList.remove('btn-success');
-            button.classList.add('btn-danger');
-        } else {
-            // Hide the form and show the label
-            form.style.display = 'none';
-            label.style.display = 'inline';
-
-            // Change button back to "Edit" and make it green
-            button.textContent = 'Edit';
-            button.classList.remove('btn-danger');
-            button.classList.add('btn-success');
-        }
-    }
-</script>
 {% endblock %}
