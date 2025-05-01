@@ -5,3 +5,4 @@ Flask-SQLAlchemy
 email-validator
 python-dotenv
 Werkzeug
+Flask-Migrate
