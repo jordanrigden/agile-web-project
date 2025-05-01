@@ -21,22 +21,24 @@
 
   const ctx = document.getElementById('chartCanvas').getContext('2d');
   const myChart = new Chart(ctx, {
-    type: 'line',
+    type: 'bar',
     data: {
       labels: labels,
       datasets: [
         {
-          label: 'Duration (min)',
-          data: durations,
-          borderColor: 'blue',
-          fill: false
-        },
-        {
           label: 'Calories Burned (kcal)',
           data: calories,
+          backgroundColor: 'rgba(255, 165, 0, 0.2)',
           borderColor: 'orange',
-          fill: false
-        }
+          borderWidth: 1,
+        },
+        /*{
+          label: 'Workout Duration (minutes)',
+          data: durations,
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        }*/
       ]
     }
   });
