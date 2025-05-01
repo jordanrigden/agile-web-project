@@ -33,13 +33,7 @@ venv\Scripts\activate           # Windows
 # 2. Install project dependencies
 pip install -r requirements.txt
 
-# 3. Initialize the database (only on first run)
-python
->>> from app import app, db
->>> with app.app_context():
-...     db.create_all()
-...     exit()
 
-# 4. Start the Flask app
+# 3. Start the Flask app
 python app.py
 
