@@ -6,6 +6,8 @@ from flask_login import LoginManager, login_user, logout_user, current_user, log
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
 from flask_migrate import Migrate
+from sqlalchemy import desc
+from collections import defaultdict
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -69,7 +71,7 @@ def login():
 @login_required
 def profile():
     form = WeightUpdateForm()
-    workouts = Workout.query.filter_by(user_id=current_user.id).all()
+    workouts = Workout.query.filter_by(user_id=current_user.id).order_by(desc(Workout.date)).limit(9).all()
     return render_template('profile.html', workouts=workouts, form=form)
 
 @app.route('/logout')
@@ -82,6 +84,7 @@ def logout():
 @app.route('/upload', methods=['GET', 'POST'])
 @login_required
 def upload():
+    flash('Ensure correct weight in profile before upload.', 'info')
     form = WorkoutForm()
     if form.validate_on_submit():
 
@@ -109,21 +112,89 @@ def upload():
 @app.route('/visualize')
 @login_required
 def visualize():
-    workouts = Workout.query.filter_by(user_id=current_user.id).order_by(Workout.date).all()
-    labels = [w.date.strftime('%Y-%m-%d') for w in workouts]
-    durations = [w.duration for w in workouts]
-    calories = [w.calories for w in workouts]
+    # Get the range type (week, month, year) from the query parameters
+    range_type = request.args.get('range', 'week')
+    today = datetime.today()
 
-    start_of_week = datetime.now().date() - timedelta(days=datetime.now().weekday())
-    weekly_workouts = [w for w in workouts if w.date >= start_of_week]
-    weekly_count = len(weekly_workouts)
-    avg_duration = round(sum(w.duration for w in weekly_workouts) / weekly_count, 2) if weekly_count else 0
-    avg_calories = round(sum(w.calories for w in weekly_workouts) / weekly_count, 2) if weekly_count else 0
+    # Determine the start date based on the range type
+    if range_type == 'month':
+        start_date = today - timedelta(days=30)  # Last 30 days
+    elif range_type == 'year':
+        start_date = today - timedelta(days=365)  # Last 365 days
+    else:  # Default to 'week'
+        start_date = today - timedelta(days=6)  # Last 7 days, including today
+
+    # Query workouts in the selected range
+    workouts = Workout.query.filter(
+        Workout.user_id == current_user.id,
+        Workout.date >= start_date
+    ).order_by(Workout.date).all()
+
+    if range_type == 'year':
+        # Generate a list of the past 12 months
+        monthly_labels = []
+        current_month = today.replace(day=1)  # Start with the first day of the current month
+        for _ in range(12):
+            monthly_labels.append(current_month.strftime('%Y-%m'))
+            current_month -= timedelta(days=1)
+            current_month = current_month.replace(day=1)  # Move to the first day of the previous month
+
+        # Group data by month and calculate totals
+        monthly_data = {month: {'duration': 0, 'calories': 0} for month in monthly_labels}
+        for workout in workouts:
+            month = workout.date.strftime('%Y-%m')  # Format: YYYY-MM
+            if month in monthly_data:
+                monthly_data[month]['duration'] += workout.duration
+                monthly_data[month]['calories'] += workout.calories
+
+        # Prepare data for the chart (totals)
+        labels = monthly_labels[::-1]  # Reverse to get chronological order
+        durations = [monthly_data[month]['duration'] for month in labels]
+        calories = [monthly_data[month]['calories'] for month in labels]
+
+        # Calculate averages for the summary
+        total_duration = sum(durations)
+        total_calories = sum(calories)
+        non_zero_months = len([month for month in durations if month > 0])  # Count months with data
+        avg_duration = round(total_duration / non_zero_months, 2) if non_zero_months > 0 else 0
+        avg_calories = round(total_calories / non_zero_months, 2) if non_zero_months > 0 else 0
+    else:
+        # Group data by date and sum duration and calories
+        grouped_data = defaultdict(lambda: {'duration': 0, 'calories': 0})
+        for workout in workouts:
+            date_str = workout.date.strftime('%Y-%m-%d')  # Format date as string
+            grouped_data[date_str]['duration'] += workout.duration
+            grouped_data[date_str]['calories'] += workout.calories
+
+        # Generate a complete list of dates in the range
+        date_list = []
+        current_date = start_date
+        while current_date <= today:
+            date_list.append(current_date.strftime('%Y-%m-%d'))
+            current_date += timedelta(days=1)
+
+        # Prepare data for the chart (totals)
+        labels = date_list
+        durations = [grouped_data[date]['duration'] for date in date_list]
+        calories = [grouped_data[date]['calories'] for date in date_list]
+
+        # Calculate averages for the summary
+        total_duration = sum(durations)
+        total_calories = sum(calories)
+        non_zero_days = len([day for day in durations if day > 0])  # Count days with data
+        avg_duration = round(total_duration / non_zero_days, 2) if non_zero_days > 0 else 0
+        avg_calories = round(total_calories / non_zero_days, 2) if non_zero_days > 0 else 0
 
     return render_template('visualize.html',
-        labels=labels, durations=durations, calories=calories,
-        workouts=workouts, weekly_count=weekly_count,
-        avg_duration=avg_duration, avg_calories=avg_calories)
+        labels=labels,
+        durations=durations,
+        calories=calories,
+        workouts=workouts,
+        weekly_count=len(workouts),
+        avg_duration=avg_duration,  # Pass average duration for the summary
+        avg_calories=avg_calories,  # Pass average calories for the summary
+        selected_range=range_type
+    )
 
 @app.route('/update_weight', methods=['POST'])
 @login_required

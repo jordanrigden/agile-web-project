@@ -1,13 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="my-4 p-3 bg-light border rounded">
-  <h5>Weekly Summary 📈</h5>
+  <h5>{{ selected_range.capitalize() }} Summary 📈</h5>
   <ul>
     <li><strong>Workouts in total:</strong> {{ weekly_count }}</li>
     <li><strong>Average duration:</strong> {{ avg_duration }} minutes</li>
     <li><strong>Average calories burned:</strong> {{ avg_calories }} kcal</li>
   </ul>
 </div>
+
+<nav class="nav nav-pills justify-content-center mb-4">
+  <form method="get" action="{{ url_for('visualize') }}" class="d-flex gap-2">
+    <button type="submit" name="range" value="week" class="btn btn-outline-primary w-100 {{ 'active' if selected_range == 'week' else '' }}">Week</button>
+    <button type="submit" name="range" value="month" class="btn btn-outline-primary w-100 {{ 'active' if selected_range == 'month' else '' }}">Month</button>
+    <button type="submit" name="range" value="year" class="btn btn-outline-primary w-100 {{ 'active' if selected_range == 'year' else '' }}">Year</button>
+  </form>
+</nav>
 
 <h2>Workout Summary</h2>
 
@@ -31,16 +39,42 @@
           backgroundColor: 'rgba(255, 165, 0, 0.2)',
           borderColor: 'orange',
           borderWidth: 1,
+          yAxisID: 'y-calories', // Link this dataset to the left y-axis
         },
-        /*{
+        {
           label: 'Workout Duration (minutes)',
           data: durations,
           backgroundColor: 'rgba(75, 192, 192, 0.2)',
           borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 1
-        }*/
+          borderWidth: 1,
+          yAxisID: 'y-duration', // Link this dataset to the right y-axis
+        }
       ]
-    }
+    },
+    options: {
+      responsive: true,
+      scales: {
+        'y-calories': { // Left y-axis for calories
+          position: 'left',
+          title: {
+            display: true,
+            text: 'Calories Burned (kcal)',
+          },
+          beginAtZero: true,
+        },
+        'y-duration': { // Right y-axis for duration
+          position: 'right',
+          title: {
+            display: true,
+            text: 'Workout Duration (minutes)',
+          },
+          beginAtZero: true,
+          grid: {
+            drawOnChartArea: false, // Prevent grid lines from overlapping
+          },
+        },
+      },
+    },
   });
 </script>
 {% else %}
