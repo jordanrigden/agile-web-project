@@ -1,0 +1,10 @@
+# Virtual environments
+venv/
+.env/
+
+# Bytecode and cache
+__pycache__/
+
+# Database
+instance/
+

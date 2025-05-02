@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container mt-4">
-    <h2>{{ current_user.username }}'s Profile</h2>
+    <h2>{{ current_user.username.capitalize() }}'s Profile</h2>
     <div class="card mb-3">
         <div class="card-body">
             <h5 class="card-title">Email: {{ current_user.email }}</h5>
@@ -27,7 +27,7 @@
                             <h5 class="card-title">{{ workout.description }}</h5>
                             <p class="card-text"><strong>Date:</strong> {{ workout.date }}</p>
                             <p class="card-text"><strong>Duration:</strong> {{ workout.duration }} minutes</p>
-                            <p class="card-text"><strong>Calories Burned:</strong> {{ workout.calories }} kcal</p>
+                            <p class="card-text"><strong>Calories Burned:</strong> {{ workout.calories | round(2) }} kcal</p>
                         </div>
                     </div>
                 </div>
