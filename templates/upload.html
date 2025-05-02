@@ -1,70 +1,27 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Upload Workout</h2>
-<form method="POST">
-    {{ form.hidden_tag() }}
-    <div class="mb-3">
-        {{ form.date.label }}
-        {{ form.date(class="form-control", lang="en") }}
-    </div>
-    <div class="mb-3">{{ form.description.label }} {{ form.description(class="form-control") }}</div>
-    <div class="mb-3">{{ form.activity.label }} {{ form.activity(class="form-control") }}</div>
-    <div class="mb-3">{{ form.duration.label }} {{ form.duration(class="form-control") }}</div>
-    {{ form.submit(class="btn btn-success") }}
-</form>
-
-<div class="container mt-4">
-  <div class="row justify-content-center g-4">
-    <div class="col-md-4">
-      <div class="card h-100">
-        <div class="card-body">
-          <h5 class="card-title">Very Light Activities</h5>
-          <p class="card-text"><strong>MET Range:</strong> 1.5–2.9</p>
-          <p>Examples include slow walking, stretching, light housework, and gentle yoga.</p>
-        </div>
+<div class="upload-section">
+  <h2>Upload Workout</h2>
+  <form method="POST">
+      {{ form.hidden_tag() }}
+      <div class="mb-3">
+          {{ form.date.label }}
+          {{ form.date(class="form-control", lang="en") }}
       </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="card h-100">
-        <div class="card-body">
-          <h5 class="card-title">Light to Moderate Activities</h5>
-          <p class="card-text"><strong>MET Range:</strong> 3.0–4.9</p>
-          <p>Examples include brisk walking, light dancing, recreational cycling, or beginner strength training.</p>
-        </div>
+      <div class="mb-3">
+          {{ form.description.label }}
+          {{ form.description(class="form-control") }}
       </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="card h-100">
-        <div class="card-body">
-          <h5 class="card-title">Moderate to Vigorous Activities</h5>
-          <p class="card-text"><strong>MET Range:</strong> 5.0–6.9</p>
-          <p>Examples include hiking, moderate swimming, tennis, or vinyasa yoga.</p>
-        </div>
+      <div class="mb-3">
+          {{ form.activity.label }}
+          {{ form.activity(class="form-control") }}
       </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="card h-100">
-        <div class="card-body">
-          <h5 class="card-title">Vigorous Activities</h5>
-          <p class="card-text"><strong>MET Range:</strong> 7.0–8.9</p>
-          <p>Examples include running (5–6 mph), uphill cycling, and circuit training.</p>
-        </div>
+      <div class="mb-3">
+          {{ form.duration.label }}
+          {{ form.duration(class="form-control") }}
       </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="card h-100">
-        <div class="card-body">
-          <h5 class="card-title">Very Vigorous / High-Intensity</h5>
-          <p class="card-text"><strong>MET Range:</strong> 9.0+</p>
-          <p>Examples include sprinting, competitive sports, rowing, or HIIT workouts.</p>
-        </div>
-      </div>
-    </div>
-  </div>
+      {{ form.submit(class="btn btn-success") }}
+  </form>
 </div>
 {% endblock %}
