@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 from flask_migrate import Migrate
 from sqlalchemy import desc
 from collections import defaultdict
+from static.py.activities import activities
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -71,7 +72,7 @@ def login():
 @login_required
 def profile():
     form = WeightUpdateForm()
-    workouts = Workout.query.filter_by(user_id=current_user.id).order_by(desc(Workout.date)).limit(9).all()
+    workouts = Workout.query.filter_by(user_id=current_user.id).order_by(desc(Workout.date)).limit(8).all()
     return render_template('profile.html', workouts=workouts, form=form)
 
 @app.route('/logout')
@@ -107,7 +108,7 @@ def upload():
         db.session.commit()
         flash('Workout uploaded successfully!', 'success')
         return redirect(url_for('visualize'))
-    return render_template('upload.html', form=form)
+    return render_template('upload.html', form=form, activities=activities)
 
 @app.route('/visualize')
 @login_required
