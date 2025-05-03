@@ -2,22 +2,25 @@
 
 {% block content %}
 <h2>Share Workouts</h2>
-
+{% if workouts %}
 <form method="POST">
+    {{ form.hidden_tag() }}
     <div class="mb-3">
-        <label for="username">Share with (username):</label>
-        <input type="text" name="username" class="form-control" required>
+        <div class="mb-3">{{ form.username.label }} {{ form.username(class="form-control") }}</div>
     </div>
     <div class="mb-3">
         <label for="workout_id">Workout:</label>
         <select name="workout_id" class="form-control">
             {% for workout in workouts %}
                 <option value="{{ workout.id }}">
-                    {{ workout.date }} - {{ workout.activity }}
+                    {{ workout.date.strftime('%d %B %Y') }} - {{ workout.description }}
                 </option>
             {% endfor %}
         </select>
     </div>
-    <button type="submit" class="btn btn-primary">Share</button>
+    {{ form.submit(class="btn btn-primary btn-block") }}
 </form>
+{% else %}
+<p>You have no workouts to share.</p>
+{% endif %}
 {% endblock %}

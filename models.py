@@ -12,7 +12,21 @@ class User(UserMixin, db.Model):
     weight = db.Column(db.Float, nullable=False)
 
     workouts = db.relationship('Workout', backref='user', lazy=True)
-    shares = db.relationship('Share', backref='owner', lazy=True)
+
+    # Relationships 
+    sent_shares = db.relationship(
+        'Share',
+        foreign_keys='[Share.owner_id]',
+        back_populates='owner',
+        lazy=True
+    )
+
+    received_shares = db.relationship(
+        'Share',
+        foreign_keys='[Share.shared_with_user_id]',
+        back_populates='shared_with_user',
+        lazy=True
+    )
 
 class Workout(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -39,6 +53,18 @@ class Workout(db.Model):
 
 class Share(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    workout_id = db.Column(db.Integer, db.ForeignKey('workout.id'))
-    shared_with = db.Column(db.String(64))  # Username of the recipient
-    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    workout_id = db.Column(db.Integer, db.ForeignKey('workout.id'), nullable=False)
+    shared_with_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    # Relationships
+    shared_with_user = db.relationship(
+        'User',
+        foreign_keys=[shared_with_user_id],
+        back_populates='received_shares'
+    )
+    owner = db.relationship(
+        'User',
+        foreign_keys=[owner_id],
+        back_populates='sent_shares'
+    )

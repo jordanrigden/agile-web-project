@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, flash, request
 from config import Config
-from models import db, User, Workout  
-from forms import RegisterForm, LoginForm, WorkoutForm, WeightUpdateForm
+from models import db, User, Workout, Share
+from forms import RegisterForm, LoginForm, WorkoutForm, WeightUpdateForm, ShareForm
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
@@ -208,6 +208,56 @@ def update_weight():
     else:
         flash('Failed to update weight. Please try again.', 'danger')
     return redirect(url_for('profile', form=form))
+
+@app.route('/share', methods=['GET', 'POST'])
+@login_required
+def share():
+    form = ShareForm()
+    workouts = Workout.query.filter_by(user_id=current_user.id).order_by(desc(Workout.date)).limit(30).all()
+
+    # Populate the choices for the workout_id field
+    form.workout_id.choices = [(workout.id, f"{workout.date.strftime('%Y-%m-%d')} - {workout.description}") for workout in workouts]
+
+    if form.validate_on_submit():
+        username = request.form['username']
+        workout_id = request.form['workout_id']
+
+        # Find the user to share with
+        user_to_share = User.query.filter_by(username=username).first()
+        if not user_to_share:
+            flash('User not found!', 'danger')
+            return redirect(url_for('share'))
+
+        shared_workout = Share(
+            workout_id = workout_id,
+            shared_with_user_id = user_to_share.id,
+            owner_id = current_user.id
+        )
+        db.session.add(shared_workout)
+        db.session.commit()
+        flash(f'Workout shared to {username}!', 'success')
+    return render_template('share.html', workouts=workouts, form=form)
+
+@app.route('/shared_with_me', methods=['GET', 'POST'])
+@login_required
+def shared_with_me():
+    share_records = Share.query.filter_by(shared_with_user_id=current_user.id).all()
+
+    workouts_with_usernames = []
+
+    for share in share_records:
+        workout = Workout.query.get(share.workout_id)
+        if workout:
+            # Fetch the user who shared the workout
+            sharing_user = User.query.get(share.owner_id)
+            if sharing_user:
+                # Append workout data with the sharing user's username
+                workouts_with_usernames.append({
+                    'workout': workout,
+                    'sharing_username': sharing_user.username
+                })
+
+    return render_template('shared_with_me.html', workouts=workouts_with_usernames)
 
 if __name__ == '__main__':
     with app.app_context():

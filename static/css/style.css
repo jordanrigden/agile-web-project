@@ -301,6 +301,7 @@ a:hover {
         opacity: 0;
         transform: translateY(40px);
     }
+
     100% {
         opacity: 1;
         transform: translateY(0);
@@ -316,4 +317,19 @@ a:hover {
 .btn-primary:hover {
     transform: scale(1.05);
     transition: all 0.3s ease;
+}
+
+/* Shared With Me Section */
+.list-group-item {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 5px;
+    height: fit-content;
+    text-align: center;
+    padding: 20px 10px;
+}
+
+.list-group-item>span {
+    text-align: center;
+    ;
 }

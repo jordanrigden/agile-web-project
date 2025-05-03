@@ -31,3 +31,8 @@ class WorkoutForm(FlaskForm):
 class WeightUpdateForm(FlaskForm):
     weight = FloatField('Weight (kg)', validators=[DataRequired()])
     submit = SubmitField('Update Weight')
+
+class ShareForm(FlaskForm):
+    username = StringField('Share With', validators=[DataRequired(), Length(min=4, max=25)])
+    workout_id = SelectField('Workout', coerce=int, validators=[DataRequired()])
+    submit = SubmitField('Share')

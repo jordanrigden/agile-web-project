@@ -25,8 +25,8 @@
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('profile') }}">Profile</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('upload') }}">Upload</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('visualize') }}">Visualize</a></li>
-                    {# <li class="nav-item"><a class="nav-link" href="{{ url_for('share') }}">Share</a></li> #}
-                    {# <li class="nav-item"><a class="nav-link" href="{{ url_for('shared_with_me') }}">Shared With Me</a></li> #}
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('share') }}">Share</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('shared_with_me') }}">Shared With Me</a></li>
                     <li class="nav-item"><a class="nav-link text-danger" href="{{ url_for('logout') }}">Logout</a></li>
                 {% else %}
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
