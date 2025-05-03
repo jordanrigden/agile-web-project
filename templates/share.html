@@ -1,26 +1,35 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Share Workouts</h2>
-{% if workouts %}
-<form method="POST">
-    {{ form.hidden_tag() }}
-    <div class="mb-3">
-        <div class="mb-3">{{ form.username.label }} {{ form.username(class="form-control") }}</div>
+<div class="container share-section fade-in">
+    <h2>Share Workouts</h2>
+
+    {% if workouts %}
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        
+        <div class="mb-4">
+            <label class="form-label fw-bold">{{ form.username.label }}</label>
+            {{ form.username(class="form-control") }}
+        </div>
+
+        <div class="mb-4">
+            <label for="workout_id" class="form-label fw-bold">Select Workout</label>
+            <select name="workout_id" class="form-control">
+                {% for workout in workouts %}
+                    <option value="{{ workout.id }}">
+                        {{ workout.date.strftime('%d %B %Y') }} - {{ workout.description }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Share Now</button>
+    </form>
+    {% else %}
+    <div class="alert alert-warning mt-4 text-center">
+        You have no workouts to share.
     </div>
-    <div class="mb-3">
-        <label for="workout_id">Workout:</label>
-        <select name="workout_id" class="form-control">
-            {% for workout in workouts %}
-                <option value="{{ workout.id }}">
-                    {{ workout.date.strftime('%d %B %Y') }} - {{ workout.description }}
-                </option>
-            {% endfor %}
-        </select>
-    </div>
-    {{ form.submit(class="btn btn-primary btn-block") }}
-</form>
-{% else %}
-<p>You have no workouts to share.</p>
-{% endif %}
+    {% endif %}
+</div>
 {% endblock %}
