@@ -5,12 +5,13 @@
 
 {% if workouts %}
 <ul class="list-group">
-    {% for workout in workouts %}
+    {% for item in workouts %}
     <li class="list-group-item">
-        <strong>Date:</strong> {{ workout.date }} |
-        <strong>Activity:</strong> {{ workout.description }} |
-        <strong>Duration:</strong> {{ workout.duration }} mins |
-        <strong>Calories:</strong> {{ workout.calories }} kcal
+        <span><strong>User:</strong> {{ item.sharing_username }}</span>
+        <span><strong>Date:</strong> {{ item.workout.date.strftime('%d %B %Y') }}</span>
+        <span><strong>Activity:</strong> {{ item.workout.description }}</span>
+        <span><strong>Duration:</strong> {{ item.workout.duration }} mins</span>
+        <span><strong>Calories:</strong> {{ item.workout.calories | round(1) }} kcal</span>
     </li>
     {% endfor %}
 </ul>
