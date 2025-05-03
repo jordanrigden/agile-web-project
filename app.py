@@ -6,7 +6,7 @@ from flask_login import LoginManager, login_user, logout_user, current_user, log
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
 from flask_migrate import Migrate
-from sqlalchemy import desc
+from sqlalchemy import desc, and_
 from collections import defaultdict
 from static.py.activities import activities
 
@@ -226,6 +226,19 @@ def share():
         user_to_share = User.query.filter_by(username=username).first()
         if not user_to_share:
             flash('User not found!', 'danger')
+            return redirect(url_for('share'))
+        
+                # Check if the share combination already exists
+        existing_share = Share.query.filter(
+            and_(
+                Share.workout_id == workout_id,
+                Share.shared_with_user_id == user_to_share.id,
+                Share.owner_id == current_user.id
+            )
+        ).first()
+
+        if existing_share:
+            flash('This workout has already been shared with this user!', 'warning')
             return redirect(url_for('share'))
 
         shared_workout = Share(
