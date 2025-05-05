@@ -21,7 +21,7 @@ class WorkoutForm(FlaskForm):
     date = DateField('Date', validators=[DataRequired()])
     description = StringField('Description', validators=[DataRequired(), Length(max=200)])
     activity = SelectField(
-        'Type of Activity',
+        'Intensity',
         choices=[(activity, activity) for activity in Workout.MET_VALUES.keys()],
         validators=[DataRequired()]
     )

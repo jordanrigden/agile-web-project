@@ -1,71 +1,80 @@
 {% extends 'base.html' %}
 {% block content %}
 <div>
-    <h2 style="margin-bottom: 30px;">Your Profile</h2>
-    <div class="card mb-3">
+    <div class="form-container mb-3">
+        <h2 class="container-header">Your Profile</h2>
         <div class="card-body">
-            <p class="card-text">Username: {{ current_user.username }}</p>
-            <p class="card-text">Email: {{ current_user.email }}</p>
-            <p class="card-text">Weight: {{ current_user.weight }}</p>
-            <form id="edit-weight-form" method="POST" action="{{ url_for('update_weight') }}">
-                {{ form.hidden_tag() }}
-                <!-- Modal - Hidden until toggled -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Update Weight</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        <input type="number" name="weight" id="weight-input" class="form-control d-inline w-auto" value="{{ current_user.weight }}" placeholder="Enter new weight" required>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                      </div>
-                    </div>
-                  </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="card-text profile"><strong>Username: </strong>{{ current_user.username }}</p>
+                    <p class="card-text profile"><strong>Email: </strong>{{ current_user.email }}</p>
                 </div>
-            </form>
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Update Weight
-            </button>
+                <div class="col-md-6">
+                    <p class="card-text profile"><strong>Weight: </strong>{{ current_user.weight }}</p>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Update Weight
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <h3 style="margin-bottom: 30px;">Your Recent Workouts</h3>
-    {% if workouts %}
-        <div class="row gx-2">
-            {% for workout in workouts %}
-                <div class="col-12 col-md-6 col-lg-3 mb-3">
-                    <div class="card p-2 h-100">
-                        <h5 class="card-header">{{ workout.date.strftime('%d %B %Y') }}</h5>
-                        <div class="card-body p-2">
-                            <p class="card-text">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
-                                    <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
-                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
-                                </svg>
-                                {{ workout.duration }} minutes
-                            </p>
-                            <p class="card-text">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-activity" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2"/>
-                                </svg>
-                                {{ workout.description }}
-                            </p>
-                        </div>
-                        <div class="card-footer">
-                            <strong>Calories Burned:</strong> {{ workout.calories | round(1) }} kcal
+    <!-- Modal - Hidden until toggled -->
+    <form id="edit-weight-form" method="POST" action="{{ url_for('update_weight') }}">
+        {{ form.hidden_tag() }}
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Update Weight</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <input type="number" name="weight" id="weight-input" class="form-control d-inline w-auto" value="{{ current_user.weight }}" placeholder="Enter new weight" required>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </form>
+
+    <div class="form-container">
+        <h2 class="container-header">Your Recent Workouts</h2>
+        {% if workouts %}
+            <div class="row gx-2">
+                {% for workout in workouts %}
+                    <div class="col-12 col-md-6 col-lg-3 mb-3">
+                        <div class="card p-2 h-100" style="background-color: var(--theme-cream); border: 1px solid var(--theme-light-blue);">
+                            <h5 class="card-header">{{ workout.date.strftime('%d %B %Y') }}</h5>
+                            <div class="card-body p-2">
+                                <p class="card-text">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
+                                        <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+                                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
+                                    </svg>
+                                    {{ workout.duration }} minutes
+                                </p>
+                                <p class="card-text">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-activity" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2"/>
+                                    </svg>
+                                    {{ workout.description }}
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <strong>Calories Burned:</strong> {{ workout.calories | round(1) }} kcal
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <p>No workouts found.</p>
-    {% endif %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No workouts found.</p>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}

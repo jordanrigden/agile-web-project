@@ -1,27 +1,33 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="upload-section">
-  <h2>Upload Workout</h2>
+<div class="form-container">
+  <h2 class="container-header">Upload Workout</h2>
   <form method="POST">
       {{ form.hidden_tag() }}
-      <div class="mb-3">
-          {{ form.date.label }}
-          {{ form.date(class="form-control", lang="en") }}
-      </div>
-      <div class="mb-3">
-          {{ form.description.label }}
-          {{ form.description(class="form-control") }}
-      </div>
-      <div class="mb-3">
-          {{ form.activity.label }}
-          {{ form.activity(class="form-control") }}
-      </div>
-      <div class="mb-3">
-          {{ form.duration.label }}
-          {{ form.duration(class="form-control") }}
-      </div>
-      {{ form.submit(class="btn btn-success") }}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                  {{ form.description.label(class="form-label") }}
+                  {{ form.description(class="form-control") }}
+                </div>
+                <div class="mb-3">
+                  {{ form.duration.label(class="form-label") }}
+                  {{ form.duration(class="form-control") }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                  {{ form.date.label(class="form-label") }}
+                  {{ form.date(class="form-control", lang="en") }}
+                </div>
+                <div class="mb-3">
+                  {{ form.activity.label(class="form-label") }}
+                  {{ form.activity(class="form-control") }}
+                </div>
+            </div>
+        </div>
+      {{ form.submit(class="btn btn-primary btn-block") }}
   </form>
 </div>
 
