@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="my-4 p-3 bg-light border rounded">
-  <h5>{{ selected_range.capitalize() }} Summary 📈</h5>
+<div class="my-4 p-3 bg-light border rounded form-container">
+  <h2 class="container-header">{{ selected_range.capitalize() }} Summary 📈</h2>
   <ul>
     <li><strong>Workouts in total:</strong> {{ weekly_count }}</li>
     <li><strong>Average duration:</strong> {{ avg_duration }} minutes</li>

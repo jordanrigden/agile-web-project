@@ -1,25 +1,45 @@
+:root {
+    --theme-dark-blue: #183B4E;
+    --theme-light-blue: #27548a;
+    --theme-yellow: #DDA853;
+    --theme-yellow-hovered: #c9994d7e;
+    --theme-cream: #F3F3E0;
+    --warning-red: #dc3545;
+
+    --container-color: white;
+
+    --primary-text-color: #333;
+    --secondary-text-color: rgb(61, 61, 61)
+}
+
 /* ======= FitTrack Sport Theme Style ======= */
 
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #f0f7fa;
-    color: #333;
+    background-color: var(--theme-cream);
+    color: var(--primary-text-color);
     margin: 0;
     padding: 0;
 }
 
 .navbar {
-    background-color: #007bff;
+    background-color: var(--theme-dark-blue);
 }
 
-.navbar-brand,
 .nav-link {
     color: white !important;
     font-weight: bold;
+    transition: 0.5s ease;
 }
 
 .nav-link:hover {
-    color: #ffc107 !important;
+    color: var(--theme-yellow) !important;
+    text-decoration: none;
+    transform: scale(1.1);
+}
+
+.nav-link.text-danger:hover {
+    color: var(--warning-red) !important;
 }
 
 .container {
@@ -28,10 +48,19 @@ body {
 }
 
 .card {
-    background: white;
+    background: var(--container-color);
     border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: none;
     margin-bottom: 20px;
+}
+
+.feed-card {
+    border: 1px solid var(--theme-light-blue);
+}
+
+.feed-card>.card-header {
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
 }
 
 .card.p-2 {
@@ -50,12 +79,12 @@ body {
     justify-content: left;
     gap: 20px;
     padding: 10px;
-    color: rgb(61, 61, 61);
+    color: var(--secondary-text-color);
     padding: 10px;
 }
 
-.btn.btn-primary {
-    margin-left: 10px;
+.card-text.profile {
+    font-size: 20px;
 }
 
 .card-header,
@@ -78,19 +107,29 @@ h3,
 h4,
 h5 {
     font-weight: 700;
-    color: #007bff;
+    color: var(--theme-light-blue);
+    margin-bottom: 20px;
 }
 
 .btn-primary {
-    background-color: #28a745;
+    background-color: var(--theme-dark-blue);
     border: none;
     border-radius: 50px;
     padding: 10px 20px;
     font-weight: bold;
 }
 
+.btn-outline-primary {
+    background-color: var(--theme-dark-blue);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--theme-light-blue);
+    color: white;
+}
+
 .btn-primary:hover {
-    background-color: #218838;
+    background-color: var(--theme-light-blue);
 }
 
 .btn-secondary {
@@ -103,17 +142,6 @@ h5 {
 
 .btn-secondary:hover {
     background-color: #e0a800;
-}
-
-.form-control {
-    border-radius: 10px;
-    border: 1px solid #ced4da;
-    padding: 10px;
-}
-
-.form-control:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
 }
 
 .alert {
@@ -129,6 +157,14 @@ h5 {
     font-size: 14px;
 }
 
+.form-container {
+    background: var(--container-color);
+    color: var(--theme-dark-blue);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+}
+
 /* Chart Container */
 .chart-container {
     background: white;
@@ -137,50 +173,14 @@ h5 {
     padding: 20px;
 }
 
-/* Upload Page & Share Page */
-.upload-section,
-.share-section {
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-}
-
-/* Links */
-a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-a:hover {
-    color: #0056b3;
-    text-decoration: underline;
-}
-
-/* Tables */
-.table {
-    background: white;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.table thead {
-    background-color: #007bff;
-    color: white;
-}
-
-.table tbody tr:hover {
-    background-color: #f1f1f1;
-}
-
 /* Responsive Tweaks */
 @media (max-width: 768px) {
-    .navbar-brand {
-        font-size: 20px;
-    }
-
     .nav-link {
         font-size: 16px;
+    }
+
+    .nav-link:hover {
+        transform: translateX(10px);
     }
 
     .card {
@@ -188,62 +188,19 @@ a:hover {
     }
 }
 
-/* Upload Page Section - Enhanced Sport Style */
-.upload-section {
-    background: linear-gradient(to right, #e0f7fa, #ffffff);
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
-    border-left: 5px solid #007bff;
-}
-
-.upload-section h2 {
-    font-size: 28px;
-    font-weight: 800;
-    text-transform: uppercase;
-    color: #007bff;
-    letter-spacing: 1px;
-    margin-bottom: 25px;
-    border-bottom: 3px solid #28a745;
-    display: inline-block;
-    padding-bottom: 5px;
-}
-
-.upload-section .btn-success {
-    background-color: #28a745;
-    border: none;
-    padding: 12px 30px;
-    font-size: 16px;
-    font-weight: bold;
-    text-transform: uppercase;
-    border-radius: 30px;
-    box-shadow: 0 4px 10px rgba(40, 167, 69, 0.2);
-    transition: all 0.2s ease-in-out;
-}
-
-.upload-section .btn-success:hover {
-    background-color: #218838;
-    transform: scale(1.05);
-}
-
 /* Enhanced Login Form Style */
 .container.upload-section {
-    background: linear-gradient(to right, #ffffff, #e3f2fd);
-    border-left: 5px solid #28a745;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
     border-radius: 20px;
     padding: 40px 30px;
-    margin-top: 60px;
 }
 
-.container.upload-section h2 {
+.container-header {
     font-size: 26px;
     font-weight: 800;
     text-transform: uppercase;
-    color: #007bff;
     margin-bottom: 30px;
     text-align: center;
-    border-bottom: 2px solid #28a745;
     display: inline-block;
     padding-bottom: 8px;
 }
@@ -260,41 +217,48 @@ a:hover {
 }
 
 .btn-block:hover {
-    transform: scale(1.03);
+    transform: scale(1.01);
 }
 
 /* Make form elements consistent */
 .form-control {
     font-size: 16px;
-    padding: 12px;
+    padding: 16px;
+    background-color: var(--theme-cream);
+    color: var(--theme-light-blue);
+    transition: background-color 1s ease;
+    border: 1px solid var(--theme-dark-blue);
+}
+
+.form-control:hover {
+    cursor: pointer;
+}
+
+.form-control:focus {
+    background-color: var(--theme-light-blue);
+    box-shadow: 0 0 1px var(--theme-light-blue), 0 0 2px var(--theme-light-blue), 0 0 4px var(--theme-light-blue);
+    color: white;
+}
+
+.form-label {
+    color: var(--secondary-text-color);
+    font-weight: bold;
+    font-size: 20px;
+    margin-left: 5px;
+    letter-spacing: 0.03em;
 }
 
 /* ==== REGISTER SPORT STYLE ==== */
 .register-section {
-    background: linear-gradient(to right, #ffffff, #d0f0ff);
     padding: 40px 30px;
     border-radius: 20px;
-    border-left: 5px solid #28a745;
-    box-shadow: 0 6px 18px rgba(0, 123, 255, 0.2);
-    margin-top: 60px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+    background-color: white;
     animation: fadeInUp 0.8s ease-out;
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
 }
-
-.register-section h2 {
-    font-size: 28px;
-    font-weight: 800;
-    text-transform: uppercase;
-    color: #007bff;
-    margin-bottom: 25px;
-    text-align: center;
-    border-bottom: 2px solid #28a745;
-    display: inline-block;
-    padding-bottom: 6px;
-}
-
 
 @keyframes fadeInUp {
     0% {
@@ -311,12 +275,6 @@ a:hover {
 
 .fade-in {
     animation: fadeInUp 0.8s ease-in-out;
-}
-
-
-.btn-primary:hover {
-    transform: scale(1.05);
-    transition: all 0.3s ease;
 }
 
 /* Shared With Me Section */
