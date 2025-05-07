@@ -7,9 +7,10 @@
     <form method="POST">
         {{ form.hidden_tag() }}
         
-        <div class="mb-4">
+        <div class="mb-4 position-relative">
             <label class="form-label fw-bold">{{ form.username.label }}</label>
-            {{ form.username(class="form-control") }}
+            {{ form.username(class="form-control", id="shareWithInput", autocomplete="off") }}
+            <div id="suggestions" class="list-group position-absolute w-100"></div>
         </div>
 
         <div class="mb-4">
@@ -31,4 +32,32 @@
     </div>
     {% endif %}
 </div>
+
+<script>
+document.getElementById("shareWithInput").addEventListener("input", function () {
+    const query = this.value;
+    if (query.length < 1) {
+        document.getElementById("suggestions").innerHTML = "";
+        return;
+    }
+
+    fetch(`/search_users?q=${encodeURIComponent(query)}`)
+        .then(response => response.json())
+        .then(data => {
+            const suggestionsDiv = document.getElementById("suggestions");
+            suggestionsDiv.innerHTML = "";
+            data.forEach(user => {
+                const item = document.createElement("button");
+                item.className = "list-group-item list-group-item-action";
+                item.textContent = user;
+                item.type = "button";
+                item.onclick = () => {
+                    document.getElementById("shareWithInput").value = user;
+                    suggestionsDiv.innerHTML = "";
+                };
+                suggestionsDiv.appendChild(item);
+            });
+        });
+});
+</script>
 {% endblock %}
