@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, flash, request
+from flask import Flask, render_template, redirect, url_for, flash, request, jsonify
 from config import Config
 from models import db, User, Workout, Share
 from forms import RegisterForm, LoginForm, WorkoutForm, WeightUpdateForm, ShareForm
@@ -89,10 +89,7 @@ def upload():
     form = WorkoutForm()
     if form.validate_on_submit():
 
-        # Get MET value for the activity
-        met = Workout.MET_VALUES.get(form.activity.data, 1.0)  # Default to 1.0 if activity not found
-
-        # Calculate calories
+        met = Workout.MET_VALUES.get(form.activity.data, 1.0)
         duration = form.duration.data
         calories = Workout.calculate_calories(met, current_user.weight, duration)
 
@@ -113,76 +110,65 @@ def upload():
 @app.route('/visualize')
 @login_required
 def visualize():
-    # Get the range type (week, month, year) from the query parameters
     range_type = request.args.get('range', 'week')
     today = datetime.today()
 
-    # Determine the start date based on the range type
     if range_type == 'month':
-        start_date = today - timedelta(days=30)  # Last 30 days
+        start_date = today - timedelta(days=30)
     elif range_type == 'year':
-        start_date = today - timedelta(days=365)  # Last 365 days
-    else:  # Default to 'week'
-        start_date = today - timedelta(days=6)  # Last 7 days, including today
+        start_date = today - timedelta(days=365)
+    else:
+        start_date = today - timedelta(days=6)
 
-    # Query workouts in the selected range
     workouts = Workout.query.filter(
         Workout.user_id == current_user.id,
         Workout.date >= start_date
     ).order_by(Workout.date).all()
 
     if range_type == 'year':
-        # Generate a list of the past 12 months
         monthly_labels = []
-        current_month = today.replace(day=1)  # Start with the first day of the current month
+        current_month = today.replace(day=1)
         for _ in range(12):
             monthly_labels.append(current_month.strftime('%Y-%m'))
             current_month -= timedelta(days=1)
-            current_month = current_month.replace(day=1)  # Move to the first day of the previous month
+            current_month = current_month.replace(day=1)
 
-        # Group data by month and calculate totals
         monthly_data = {month: {'duration': 0, 'calories': 0} for month in monthly_labels}
         for workout in workouts:
-            month = workout.date.strftime('%Y-%m')  # Format: YYYY-MM
+            month = workout.date.strftime('%Y-%m')
             if month in monthly_data:
                 monthly_data[month]['duration'] += workout.duration
                 monthly_data[month]['calories'] += workout.calories
 
-        # Prepare data for the chart (totals)
-        labels = monthly_labels[::-1]  # Reverse to get chronological order
+        labels = monthly_labels[::-1]
         durations = [monthly_data[month]['duration'] for month in labels]
         calories = [monthly_data[month]['calories'] for month in labels]
 
-        # Calculate averages for the summary
         total_duration = sum(durations)
         total_calories = sum(calories)
-        non_zero_months = len([month for month in durations if month > 0])  # Count months with data
+        non_zero_months = len([m for m in durations if m > 0])
         avg_duration = round(total_duration / non_zero_months, 2) if non_zero_months > 0 else 0
         avg_calories = round(total_calories / non_zero_months, 2) if non_zero_months > 0 else 0
     else:
-        # Group data by date and sum duration and calories
         grouped_data = defaultdict(lambda: {'duration': 0, 'calories': 0})
         for workout in workouts:
-            date_str = workout.date.strftime('%Y-%m-%d')  # Format date as string
+            date_str = workout.date.strftime('%Y-%m-%d')
             grouped_data[date_str]['duration'] += workout.duration
             grouped_data[date_str]['calories'] += workout.calories
 
-        # Generate a complete list of dates in the range
         date_list = []
         current_date = start_date
         while current_date <= today:
             date_list.append(current_date.strftime('%Y-%m-%d'))
             current_date += timedelta(days=1)
 
-        # Prepare data for the chart (totals)
         labels = date_list
         durations = [grouped_data[date]['duration'] for date in date_list]
         calories = [grouped_data[date]['calories'] for date in date_list]
 
-        # Calculate averages for the summary
         total_duration = sum(durations)
         total_calories = sum(calories)
-        non_zero_days = len([day for day in durations if day > 0])  # Count days with data
+        non_zero_days = len([d for d in durations if d > 0])
         avg_duration = round(total_duration / non_zero_days, 2) if non_zero_days > 0 else 0
         avg_calories = round(total_calories / non_zero_days, 2) if non_zero_days > 0 else 0
 
@@ -192,8 +178,8 @@ def visualize():
         calories=calories,
         workouts=workouts,
         weekly_count=len(workouts),
-        avg_duration=avg_duration,  # Pass average duration for the summary
-        avg_calories=avg_calories,  # Pass average calories for the summary
+        avg_duration=avg_duration,
+        avg_calories=avg_calories,
         selected_range=range_type
     )
 
@@ -214,21 +200,17 @@ def update_weight():
 def share():
     form = ShareForm()
     workouts = Workout.query.filter_by(user_id=current_user.id).order_by(desc(Workout.date)).limit(30).all()
-
-    # Populate the choices for the workout_id field
-    form.workout_id.choices = [(workout.id, f"{workout.date.strftime('%Y-%m-%d')} - {workout.description}") for workout in workouts]
+    form.workout_id.choices = [(w.id, f"{w.date.strftime('%Y-%m-%d')} - {w.description}") for w in workouts]
 
     if form.validate_on_submit():
         username = request.form['username']
         workout_id = request.form['workout_id']
-
-        # Find the user to share with
         user_to_share = User.query.filter_by(username=username).first()
+
         if not user_to_share:
             flash('User not found!', 'danger')
             return redirect(url_for('share'))
-        
-                # Check if the share combination already exists
+
         existing_share = Share.query.filter(
             and_(
                 Share.workout_id == workout_id,
@@ -242,9 +224,9 @@ def share():
             return redirect(url_for('share'))
 
         shared_workout = Share(
-            workout_id = workout_id,
-            shared_with_user_id = user_to_share.id,
-            owner_id = current_user.id
+            workout_id=workout_id,
+            shared_with_user_id=user_to_share.id,
+            owner_id=current_user.id
         )
         db.session.add(shared_workout)
         db.session.commit()
@@ -255,22 +237,29 @@ def share():
 @login_required
 def shared_with_me():
     share_records = Share.query.filter_by(shared_with_user_id=current_user.id).all()
-
     workouts_with_usernames = []
 
     for share in share_records:
         workout = Workout.query.get(share.workout_id)
         if workout:
-            # Fetch the user who shared the workout
             sharing_user = User.query.get(share.owner_id)
             if sharing_user:
-                # Append workout data with the sharing user's username
                 workouts_with_usernames.append({
                     'workout': workout,
                     'sharing_username': sharing_user.username
                 })
 
     return render_template('shared_with_me.html', workouts=workouts_with_usernames)
+
+@app.route('/search_users')
+@login_required
+def search_users():
+    query = request.args.get('q', '')
+    if not query:
+        return jsonify([])
+    users = User.query.filter(User.username.ilike(f"%{query}%")).limit(10).all()
+    usernames = [user.username for user in users if user.id != current_user.id]
+    return jsonify(usernames)
 
 if __name__ == '__main__':
     with app.app_context():

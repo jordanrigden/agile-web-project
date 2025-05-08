@@ -291,3 +291,44 @@ h5 {
     text-align: center;
     ;
 }
+
+.welcome-text {
+    font-family: 'Brush Script MT', cursive;
+    font-size: 1.5rem;
+    color: #2b4c7e;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+}
+
+.hero-title {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 4.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    animation: glow 2s ease-in-out infinite;
+}
+
+@keyframes glow {
+    0%, 100% {
+        text-shadow: 0 0 6px #007bff;
+    }
+    50% {
+        text-shadow: 0 0 16px #007bff;
+    }
+}
+
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 20px;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
