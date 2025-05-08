@@ -14,12 +14,6 @@
 
 ---
 
-## 📁 Project Structure
-
-
-
-
-
 ---
 
 ## 🚀 How to Run (Development Mode)
