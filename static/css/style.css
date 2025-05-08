@@ -332,3 +332,29 @@ h5 {
     z-index: 1;
 }
 
+.subtitle-strong {
+    font-size: 2rem;
+    font-weight: 800;
+    text-align: center;
+    letter-spacing: 1.2px;
+    margin-bottom: 2.5rem;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #00f2fe, #4facfe, #00c9ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.15);
+    animation: pulseZoom 2s infinite;
+    position: relative;
+}
+
+@keyframes pulseZoom {
+    0%, 100% {
+        transform: scale(1);
+        text-shadow: 2px 2px 6px rgba(0,0,0,0.15);
+    }
+    50% {
+        transform: scale(1.05);
+        text-shadow: 2px 2px 12px rgba(0,0,0,0.25);
+    }
+}
+
