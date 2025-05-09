@@ -3,6 +3,13 @@
 {% block content %}
 <div class="form-container">
     <h2 class="container-header">Share Workouts</h2>
+    
+    <!-- introduction message -->
+    <p class="intro-text">
+        Share your proudest workouts with friends to keep each other inspired and motivated! 💪<br>
+        Just select a workout and enter a username to send it their way.
+    </p>
+
     {% if workouts %}
     <form method="POST">
         {{ form.hidden_tag() }}
@@ -60,4 +67,5 @@ document.getElementById("shareWithInput").addEventListener("input", function () 
         });
 });
 </script>
+
 {% endblock %}
