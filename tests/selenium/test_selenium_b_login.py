@@ -20,8 +20,8 @@ class TestSeleniumLogin(unittest.TestCase):
         driver = self.driver
 
         # Fill out login form
-        driver.find_element(By.NAME, "username").send_keys("mehnaz")
-        driver.find_element(By.NAME, "password").send_keys("123456")
+        driver.find_element(By.NAME, "username").send_keys("selenium_user")
+        driver.find_element(By.NAME, "password").send_keys("Selenium123")
         driver.find_element(By.NAME, "submit").click()
 
         # Wait for redirect and flash message

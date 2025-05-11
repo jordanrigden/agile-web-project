@@ -11,8 +11,8 @@ class TestSeleniumVisualize(unittest.TestCase):
         cls.driver.get("http://127.0.0.1:5000/login")
 
         # Log in first (reuse login logic)
-        cls.driver.find_element(By.NAME, "username").send_keys("mehnaz")
-        cls.driver.find_element(By.NAME, "password").send_keys("123456")
+        cls.driver.find_element(By.NAME, "username").send_keys("selenium_user")
+        cls.driver.find_element(By.NAME, "password").send_keys("Selenium123")
         cls.driver.find_element(By.NAME, "submit").click()
         time.sleep(1)
 

@@ -10,9 +10,9 @@ class TestSeleniumShare(unittest.TestCase):
         cls.driver.implicitly_wait(5)
         cls.driver.get("http://127.0.0.1:5000/login")
 
-        # Login
-        cls.driver.find_element(By.NAME, "username").send_keys("shadab")
-        cls.driver.find_element(By.NAME, "password").send_keys("1234567")
+        # Login with valid user
+        cls.driver.find_element(By.NAME, "username").send_keys("selenium_user")
+        cls.driver.find_element(By.NAME, "password").send_keys("Selenium123")
         cls.driver.find_element(By.NAME, "submit").click()
         time.sleep(2)
 
@@ -26,8 +26,8 @@ class TestSeleniumShare(unittest.TestCase):
         driver.get("http://127.0.0.1:5000/share")
         time.sleep(1)
 
-        # Fill in username
-        driver.find_element(By.ID, "shareWithInput").send_keys("mehnaz")
+        # Share with yourself (to avoid missing user error)
+        driver.find_element(By.ID, "shareWithInput").send_keys("selenium_user")
 
         # Select a workout
         workout_dropdown = driver.find_element(By.NAME, "workout_id")
@@ -41,7 +41,7 @@ class TestSeleniumShare(unittest.TestCase):
         driver.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
         time.sleep(2)
 
-        # Final check: either redirected or message shown
+        # Check if share was successful (adapt to your app's behavior)
         self.assertTrue("/share" not in driver.current_url or "FitTrack" in driver.page_source)
 
 if __name__ == "__main__":
