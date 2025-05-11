@@ -43,3 +43,22 @@ flask db upgrade
 flask db migrate -m "Description of your migration"
 
 ```
+
+---
+
+## 🧪 Running Tests
+
+Before running tests, make sure all dependencies are installed:
+
+```bash
+pip install -r requirements.txt
+
+#To run all core unit tests (e.g., forms, models, basic app logic):
+python -m unittest discover -s tests -p "test_*.py"
+
+#o run all Selenium-based UI tests located in the tests/selenium/ folder:
+python -m unittest discover -s tests/selenium -p "test_*.py"
+
+
+
+

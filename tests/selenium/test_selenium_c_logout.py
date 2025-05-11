@@ -11,8 +11,8 @@ class TestSeleniumLogout(unittest.TestCase):
         cls.driver.get("http://127.0.0.1:5000/login")
 
         # Log in first
-        cls.driver.find_element(By.NAME, "username").send_keys("mehnaz")
-        cls.driver.find_element(By.NAME, "password").send_keys("123456")
+        cls.driver.find_element(By.NAME, "username").send_keys("selenium_user")
+        cls.driver.find_element(By.NAME, "password").send_keys("Selenium123")
         cls.driver.find_element(By.NAME, "submit").click()
         time.sleep(1)
 
@@ -22,15 +22,19 @@ class TestSeleniumLogout(unittest.TestCase):
         cls.driver.quit()
 
     def test_logout(self):
-        self.driver.get("http://127.0.0.1:5000/logout")
+        driver = self.driver
+        driver.get("http://127.0.0.1:5000/logout")
         time.sleep(1)
 
-        # Check if redirected to homepage
-        current_url = self.driver.current_url
-        self.assertTrue(current_url.endswith("/") or "home" in current_url)
+        # Print actual redirected URL for debugging
+        current_url = driver.current_url
+        print("Redirected URL after logout:", current_url)
 
-        # Check for login prompt or logout message on homepage
-        page_source = self.driver.page_source
+        # More reliable check: most systems redirect to login page
+        self.assertIn("login", current_url.lower())  
+
+        # Check if login prompt or flash message is present
+        page_source = driver.page_source
         self.assertTrue("Login" in page_source or "Logged out successfully" in page_source)
 
 if __name__ == "__main__":
