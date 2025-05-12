@@ -26,7 +26,7 @@ class TestSeleniumUpload(unittest.TestCase):
 
         # ✅ Log in before testing upload
         cls.driver.get("http://127.0.0.1:5000/login")
-        cls.driver.find_element(By.NAME, "username").send_keys("selenium_user")
+        cls.driver.find_element(By.NAME, "username").send_keys("selenium01")
         cls.driver.find_element(By.NAME, "password").send_keys("Selenium123")
         cls.driver.find_element(By.NAME, "submit").click()
         time.sleep(2)
