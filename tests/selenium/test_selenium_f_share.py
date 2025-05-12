@@ -24,7 +24,7 @@ class TestSeleniumShare(unittest.TestCase):
 
         # ✅ Log in before accessing /share
         cls.driver.get("http://127.0.0.1:5000/login")
-        cls.driver.find_element(By.NAME, "username").send_keys("selenium_user")
+        cls.driver.find_element(By.NAME, "username").send_keys("selenium01")
         cls.driver.find_element(By.NAME, "password").send_keys("Selenium123")
         cls.driver.find_element(By.NAME, "submit").click()
         time.sleep(2)
@@ -44,7 +44,7 @@ class TestSeleniumShare(unittest.TestCase):
         time.sleep(1)
 
         # ✅ Share with yourself
-        driver.find_element(By.ID, "shareWithInput").send_keys("selenium_user")
+        driver.find_element(By.ID, "shareWithInput").send_keys("selenium01")
 
         # ✅ Select the first workout option
         workout_dropdown = driver.find_element(By.NAME, "workout_id")

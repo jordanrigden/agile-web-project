@@ -29,7 +29,7 @@ class TestSeleniumLogin(unittest.TestCase):
         driver = self.driver
 
         # ✅ Fill out login form
-        driver.find_element(By.NAME, "username").send_keys("selenium_user")
+        driver.find_element(By.NAME, "username").send_keys("selenium01")
         driver.find_element(By.NAME, "password").send_keys("Selenium123")
         driver.find_element(By.NAME, "submit").click()
 
