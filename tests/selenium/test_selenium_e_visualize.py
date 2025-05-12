@@ -1,16 +1,29 @@
 import unittest
+import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-import time
+from selenium.webdriver.chrome.options import Options
+from server_utils import ServerThread  # ✅ Import the server thread utility
 
 class TestSeleniumVisualize(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.driver = webdriver.Chrome()
-        cls.driver.implicitly_wait(5)
-        cls.driver.get("http://127.0.0.1:5000/login")
+        # ✅ Start the Flask live server
+        cls.server = ServerThread()
+        cls.server.start()
+        time.sleep(1)
 
-        # Log in first (reuse login logic)
+        # ✅ Set up Chrome WebDriver
+        options = Options()
+        # options.add_argument('--headless')  # Uncomment for headless testing
+        options.add_argument('--disable-gpu')
+        options.add_argument('--no-sandbox')
+        options.add_argument('--window-size=1920,1080')
+        cls.driver = webdriver.Chrome(options=options)
+        cls.driver.implicitly_wait(5)
+
+        # ✅ Log in first before running visualization tests
+        cls.driver.get("http://127.0.0.1:5000/login")
         cls.driver.find_element(By.NAME, "username").send_keys("selenium_user")
         cls.driver.find_element(By.NAME, "password").send_keys("Selenium123")
         cls.driver.find_element(By.NAME, "submit").click()
@@ -18,8 +31,10 @@ class TestSeleniumVisualize(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
+        # ✅ Close browser and stop server
         time.sleep(2)
         cls.driver.quit()
+        cls.server.shutdown()
 
     def test_visualize_week(self):
         self.driver.get("http://127.0.0.1:5000/visualize?range=week")
