@@ -51,5 +51,8 @@ class TestSeleniumVisualize(unittest.TestCase):
         time.sleep(3)
         self.assertIn("Year Summary", self.driver.page_source)
 
+    # ✅ Print test summary
+        print("✅ test_selenium_e_visualize.py ran successfully.")
+
 if __name__ == "__main__":
     unittest.main()

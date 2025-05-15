@@ -55,6 +55,8 @@ class TestSeleniumRegister(unittest.TestCase):
         self.assertIn("login", driver.current_url.lower())
         self.assertIn("Registration successful", driver.page_source)
 
+        # ✅ Print test summary
+        print("✅ test_selenium_a_register.py ran successfully.")
     @classmethod
     def tearDownClass(cls):
         # ✅ Quit browser and stop the Flask server
