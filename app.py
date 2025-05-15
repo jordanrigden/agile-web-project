@@ -85,7 +85,6 @@ def logout():
 @app.route('/upload', methods=['GET', 'POST'])
 @login_required
 def upload():
-    flash('Ensure correct weight in profile before upload.', 'info')
     form = WorkoutForm()
     if form.validate_on_submit():
 
