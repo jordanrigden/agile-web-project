@@ -44,6 +44,9 @@ class TestRegisterForm(unittest.TestCase):
             confirm_password="password123"
         )
         self.assertFalse(form.validate())
+
+# ✅ Print test summary
+print("✅ test_form.py ran successfully.")        
  
 if __name__ == "__main__":
     unittest.main()

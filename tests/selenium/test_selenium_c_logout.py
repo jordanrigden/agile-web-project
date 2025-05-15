@@ -53,6 +53,9 @@ class TestSeleniumLogout(unittest.TestCase):
         login_links = driver.find_elements(By.LINK_TEXT, "Login")
         self.assertTrue(len(login_links) > 0)
 
+        # ✅ Print test summary
+        print("✅ test_selenium_c_logout.py ran successfully.")
+
     @classmethod
     def tearDownClass(cls):
         # ✅ Quit browser and stop Flask server

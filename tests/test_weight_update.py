@@ -29,5 +29,8 @@ class TestWeightUpdateForm(unittest.TestCase):
         self.assertFalse(form.validate())
         self.assertIn('weight', form.errors)
 
+# ✅ Print test summary
+print("✅ test_weight_update.py ran successfully.")
+
 if __name__ == "__main__":
     unittest.main()

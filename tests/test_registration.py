@@ -74,6 +74,9 @@ class TestRegisterForm(unittest.TestCase):
         )
         self.assertFalse(form.validate())
         self.assertIn('weight', form.errors)
- 
+
+# ✅ Print test summary
+print("✅ test_registration.py ran successfully.")
+
 if __name__ == "__main__":
     unittest.main()

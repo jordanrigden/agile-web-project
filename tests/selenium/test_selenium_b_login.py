@@ -41,6 +41,9 @@ class TestSeleniumLogin(unittest.TestCase):
         self.assertIn("Logged in successfully.", driver.page_source)  # Flash message
         self.assertNotIn("/login", driver.current_url)  # Ensure not still on login page
 
+        # ✅ Print test summary
+        print("✅ test_selenium_b_login.py ran successfully.")
+
     @classmethod
     def tearDownClass(cls):
         # ✅ Close browser and stop Flask server
