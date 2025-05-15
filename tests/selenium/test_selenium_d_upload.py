@@ -67,5 +67,8 @@ class TestSeleniumUpload(unittest.TestCase):
         # ✅ Check for success message or confirmation
         self.assertTrue("Upload" in driver.page_source or "Success" in driver.page_source)
 
+        # ✅ Print test summary
+        print("✅ test_selenium_d_upload.py ran successfully.")
+
 if __name__ == "__main__":
     unittest.main()
