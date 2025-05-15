@@ -121,6 +121,7 @@ h5 {
 
 .btn-outline-primary {
     background-color: var(--theme-dark-blue);
+    color: white;
 }
 
 .btn-outline-primary:hover {
@@ -226,7 +227,7 @@ h5 {
     padding: 16px;
     background-color: var(--theme-cream);
     color: var(--theme-light-blue);
-    transition: background-color 1s ease;
+    transition: background-color 0.5s ease;
     border: 1px solid var(--theme-dark-blue);
 }
 
@@ -293,7 +294,7 @@ h5 {
 }
 
 .welcome-text {
-    font-family: 'Brush Script MT', cursive;
+    font-family: Arial;
     font-size: 1.5rem;
     color: #2b4c7e;
     font-style: italic;
@@ -313,9 +314,12 @@ h5 {
 }
 
 @keyframes glow {
-    0%, 100% {
+
+    0%,
+    100% {
         text-shadow: 0 0 6px #007bff;
     }
+
     50% {
         text-shadow: 0 0 16px #007bff;
     }
@@ -342,19 +346,22 @@ h5 {
     background: linear-gradient(90deg, #00f2fe, #4facfe, #00c9ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 2px 2px 6px rgba(0,0,0,0.15);
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.15);
     animation: pulseZoom 2s infinite;
     position: relative;
 }
 
 @keyframes pulseZoom {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: scale(1);
-        text-shadow: 2px 2px 6px rgba(0,0,0,0.15);
+        text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.15);
     }
+
     50% {
         transform: scale(1.05);
-        text-shadow: 2px 2px 12px rgba(0,0,0,0.25);
+        text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.25);
     }
 }
 
@@ -366,7 +373,4 @@ h5 {
     font-weight: 500;
     margin-bottom: 30px;
     line-height: 1.6;
-    animation: fadeInUp 0.6s ease-out;
 }
-
-
