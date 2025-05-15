@@ -62,5 +62,8 @@ class TestWorkoutForm(unittest.TestCase):
         self.assertFalse(form.validate())
         self.assertIn('date', form.errors)
 
+# ✅ Print test summary
+print("✅ test_workout.py ran successfully.")
+
 if __name__ == "__main__":
     unittest.main()

@@ -32,5 +32,8 @@ class TestShareForm(unittest.TestCase):
         self.assertFalse(form.validate())
         self.assertIn('username', form.errors)
 
+# ✅ Print test summary
+print("✅ test_share.py ran successfully.")
+
 if __name__ == "__main__":
     unittest.main()

@@ -60,3 +60,4 @@ class TestSeleniumRegister(unittest.TestCase):
         # ✅ Quit browser and stop the Flask server
         cls.driver.quit()
         cls.server.shutdown()
+        
