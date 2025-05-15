@@ -40,6 +40,8 @@ class TestLoginForm(unittest.TestCase):
         )
         self.assertFalse(form.validate())
         self.assertIn('password', form.errors)
+# ✅ Print test summary
+print("✅ test_login.py ran successfully.")        
 
 if __name__ == "__main__":
     unittest.main()

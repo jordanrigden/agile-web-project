@@ -27,6 +27,9 @@ class TestAppRoutes(unittest.TestCase):
         response = self.client.get('/login')
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'Login', response.data)
+        
+# ✅ Print test summary
+print("✅ test_app.py ran successfully.")
 
 if __name__ == '__main__':
     unittest.main()

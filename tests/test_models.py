@@ -47,5 +47,8 @@ class TestModels(unittest.TestCase):
         self.assertEqual(workout.user_id, user.id)
         self.assertEqual(user.workouts[0].description, 'Running')
 
+# ✅ Print test summary
+print("✅ test_models.py ran successfully.")
+
 if __name__ == '__main__':
     unittest.main()
