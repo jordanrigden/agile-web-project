@@ -60,6 +60,8 @@ class TestSeleniumShare(unittest.TestCase):
 
         # ✅ Verify share success (adjust depending on actual behavior)
         self.assertTrue("/share" not in driver.current_url or "FitTrack" in driver.page_source)
+        # ✅ Print test summary
+        print("✅ test_selenium_f_share.py ran successfully.")
 
 if __name__ == "__main__":
     unittest.main()

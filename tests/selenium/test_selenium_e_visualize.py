@@ -50,6 +50,9 @@ class TestSeleniumVisualize(unittest.TestCase):
         self.driver.get("http://127.0.0.1:5000/visualize?range=year")
         time.sleep(3)
         self.assertIn("Year Summary", self.driver.page_source)
+        
+        # ✅ Print test summary
+        print("✅ test_selenium_e_visualize.py ran successfully.")
 
 if __name__ == "__main__":
     unittest.main()
