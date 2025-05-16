@@ -1,5 +1,15 @@
 # 🏋️‍♂️ FitTrack
 
+## 👥 Group Members
+
+| UWA ID    | Name            | GitHub Username     |
+|-----------|------------------|----------------------|
+| 22496593  | Jordan Rigden    | jordanrigden         |
+| 24535749  | Mehnaz Monsur    | Mehnaz-M             |
+| 23913189  | Han Sun          | HanSun23913189       |
+| 23912137  | Ahmed Shadab     | Shadab0708           |
+
+
 **FitTrack** is a fitness tracking and sharing platform that allows users to upload their workout records, view analytical charts, and share selected data with friends.
 
 ---
